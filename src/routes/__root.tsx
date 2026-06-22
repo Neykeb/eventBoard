@@ -1,18 +1,22 @@
-import * as React from 'react'
-import { Outlet, createRootRoute } from '@tanstack/react-router'
-import { Navi } from '../components/navi'
-import { Footer } from '../components/footer'
+import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
+import { Navi } from "../components/navi";
+import { Footer } from "../components/footer";
+import type { useAuth } from "@clerk/react";
 
-export const Route = createRootRoute({
+type RouterContext = {
+  auth: ReturnType<typeof useAuth>;
+};
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
-})
+});
 
 function RootComponent() {
   return (
-    <React.Fragment>
-        <Navi />
+    <>
+      <Navi />
       <Outlet />
       <Footer />
-    </React.Fragment>
-  )
+    </>
+  );
 }

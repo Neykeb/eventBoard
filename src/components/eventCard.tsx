@@ -17,15 +17,12 @@ type EventCardProps = {
 export function EventCard({
   id,
   title,
-  description,
   date,
   time,
   location,
   category,
   status,
-  maxAttendees,
   attendees,
-  createdAt,
 }: EventCardProps) {
   return (
     <>
@@ -40,10 +37,10 @@ export function EventCard({
         <Link
           to="/events/$eventId"
           className="bg-primary w-fit py-1 px-2 rounded-md"
-          params={
-            {eventId: id}
-          }
-        >Details sehen</Link>
+          params={{ eventId: id }}
+        >
+          Details sehen
+        </Link>
       </div>
     </>
   );
