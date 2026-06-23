@@ -1,3 +1,4 @@
+// Dashboard & Details
 import { createFileRoute } from "@tanstack/react-router";
 import { EventCard } from "../../../components/eventCard";
 import { useState } from "react";
@@ -88,58 +89,58 @@ function RouteComponent() {
       <section className="mx-auto max-w-6xl space-y-8">
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-slate-800 bg-slate-700 p-5 shadow-sm">
-            <p className="text-sm text-slate-200">Anzahl aller Events</p>
+            <p className="text-sm text-slate-200">Total number of events</p>
             <p className="mt-2 text-2xl font-semibold text-slate-100">
               {sumOfEvents}
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-800 bg-slate-700 p-5 shadow-sm">
-            <p className="text-sm text-slate-200">Veröffentlichte Events</p>
+            <p className="text-sm text-slate-200">Published events</p>
             <p className="mt-2 text-2xl font-semibold text-slate-100">
               {sumOfPublishedEvents}
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-800 bg-slate-700 p-5 shadow-sm">
-            <p className="text-sm text-slate-200">Geplante Entwürfe</p>
+            <p className="text-sm text-slate-200">Drafts</p>
             <p className="mt-2 text-2xl font-semibold text-slate-100">
               {sumOfDraftEvents}
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-800 bg-slate-700 p-5 shadow-sm">
-            <p className="text-sm text-slate-200">Abgeschlossene Events</p>
+            <p className="text-sm text-slate-200">Completed events</p>
             <p className="mt-2 text-2xl font-semibold text-slate-100">
               {sumOfComplEvents}
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-800 bg-slate-700 p-5 shadow-sm">
-            <p className="text-sm text-slate-200">Abgesagte Events</p>
+            <p className="text-sm text-slate-200">Cancelled events</p>
             <p className="mt-2 text-2xl font-semibold text-slate-100">
               {sumOfCanclldEvents}
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-800 bg-slate-700 p-5 shadow-sm">
-            <p className="text-sm text-slate-200">Gesamte Teilnehmerzahl</p>
+            <p className="text-sm text-slate-200">
+              Total number of participants
+            </p>
             <p className="mt-2 text-2xl font-semibold text-slate-100">
               {sumOfAttendees}
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-800 bg-slate-700 p-5 shadow-sm">
-            <p className="text-sm text-slate-200">Nächstes Event</p>
+            <p className="text-sm text-slate-200">Next event</p>
             <p className="mt-2 text-2xl font-semibold text-slate-100">
               {nextEvent[0].id}
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-800 bg-slate-700 p-5 shadow-sm">
-            <p className="text-sm text-slate-200">
-              Durchschnittliche Auslastung
-            </p>
+            <p className="text-sm text-slate-200">Average capacity</p>
             <p className="mt-2 text-2xl font-semibold text-slate-100">
               {durchschnittlicheAuslastung}
             </p>
@@ -178,11 +179,11 @@ function RouteComponent() {
               value={selectedCategory}
             >
               <option value="">All Categories</option>
-              <option value="workshop">workshop</option>
-              <option value="talk">talk</option>
-              <option value="networking">networking</option>
-              <option value="review">review</option>
-              <option value="other">other</option>
+              <option value="workshop">Workshop</option>
+              <option value="talk">Talk</option>
+              <option value="networking">Networking</option>
+              <option value="review">Review</option>
+              <option value="other">Other</option>
             </select>
 
             <select
@@ -221,10 +222,10 @@ function RouteComponent() {
                 />
 
                 <button
-                  className="mt-4 w-full rounded-xl border border-red-800 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                  className="mt-10 w-full rounded-md border bg-white px-4 py-2 text-sm font-medium text-black transition hover:bg-red-100"
                   onClick={() => deleteEvent(element.id)}
                 >
-                  Löschen
+                  Delete
                 </button>
               </div>
             );

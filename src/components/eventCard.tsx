@@ -34,13 +34,15 @@ export function EventCard({
         <h1>Category: {category}</h1>
         <h1>status: {status}</h1>
         <h1>Attendees: {attendees.length}</h1>
-        <Link
-          to="/events/$eventId"
-          className="bg-primary w-fit py-1 px-2 rounded-md"
-          params={{ eventId: id }}
-        >
-          Details sehen
-        </Link>
+        <div className="mt-5">
+          <Link
+            to="/events/$eventId"
+            className="bg-[#AF495B] py-1 px-2 rounded-md"
+            params={{ eventId: id }}
+          >
+            Details sehen
+          </Link>
+        </div>
       </div>
     </>
   );

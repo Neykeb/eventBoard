@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import heroPage from '../assets/heroPage1.png'
 import { Link } from '@tanstack/react-router';
 export const Route = createFileRoute('/')({
   component: RouteComponent,
@@ -30,14 +29,6 @@ function RouteComponent() {
                 View Events
               </Link>
             </div>
-          </div>
-
-          <div className="flex justify-center">
-            <img
-              src={heroPage}
-              alt="HeroPage Illustration"
-              className="w-full max-w-md"
-            />
           </div>
         </div>
       </section>
