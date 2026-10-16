@@ -12,13 +12,13 @@ function RouteComponent() {
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-12 px-4 py-16 md:flex-row md:justify-between md:px-8">
           <div className="max-w-xl text-left">
             <h1 className="text-4xl font-bold text-white sm:text-5xl">
-              Manage your events simply and
-              <strong className="text-[#F95F7A]"> clearly. </strong>
+              Verwalte deine Events einfach und
+              <strong className="text-[#F95F7A]"> übersichtlich. </strong>
             </h1>
 
             <p className="mt-4 text-base text-slate-300 sm:text-lg">
-              Create, edit and manage events — with attendee management, filter
-              options and a calendar overview.
+              Erstelle, bearbeite und verwalte Events mit Teilnehmerverwaltung,
+              Suche und Filtern.
             </p>
 
             <div className="mt-6 flex gap-4">
@@ -26,7 +26,7 @@ function RouteComponent() {
                 to="/events"
                 className="rounded-lg bg-slate-100 px-5 py-3 font-medium text-slate-900 transition hover:bg-white"
               >
-                View Events
+                Events anzeigen
               </Link>
             </div>
           </div>

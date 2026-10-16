@@ -26,7 +26,7 @@ function App() {
   if (!auth.isLoaded) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-800 text-white">
-        Loading...
+        Anwendung wird geladen...
       </main>
     );
   }

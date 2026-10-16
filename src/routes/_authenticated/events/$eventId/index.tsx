@@ -1,46 +1,95 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEvents } from "../../../../hooks/useEvents";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import type { FormEvent } from "react";
+import { LoadingState } from "../../../../components/LoadingState";
+import { ErrorState } from "../../../../components/ErrorState";
+import { eventCategoryLabels, eventStatusLabels } from "../../../../data/events";
 
 export const Route = createFileRoute("/_authenticated/events/$eventId/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { events, addAttendee } = useEvents();
+  // NEU: Asynchroner Datenfluss - Details erst nach dem Laden auswerten.
+  const { events, isLoading, error, retry, addAttendee } = useEvents();
   const { eventId } = Route.useParams();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [formErrors, setFormErrors] = useState({ name: "", email: "", form: "" });
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
 
-  const eventFound = events.find((e: any) => e.id === eventId);
+  const eventFound = events.find((event) => event.id === eventId);
 
-  function handleAddAttendeeBtn(){
-     const newAttendee = {
-    id: crypto.randomUUID(),
-    name: name,
-    email: email,
-  }
-  addAttendee(eventFound.id, newAttendee);
+  if (isLoading) {
+    // NEU: Ladezustand - verhindert eine verfrühte Detailansicht.
+    return <LoadingState message="Event wird geladen..." />;
   }
 
-  function handleAddAttendeeName(e: any){
-    setName(e.target.value);
+  if (error) {
+    // NEU: Fehlerzustand - Retry startet fetch erneut.
+    return <ErrorState message={error} onRetry={() => void retry()} />;
   }
-  function handleAddAttendeeEmail(e: any){
-    setEmail(e.target.value)
+
+  // NEU: Teilnehmer-Validierung - prüft Pflichtfelder, E-Mail, Duplikate und Kapazität.
+  function handleAddAttendee(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!eventFound) return;
+
+    const trimmedName = name.trim();
+    const normalizedEmail = email.trim().toLowerCase();
+    const nextErrors = { name: "", email: "", form: "" };
+
+    if (!trimmedName) nextErrors.name = "Bitte gib einen Namen ein.";
+    if (!normalizedEmail) {
+      nextErrors.email = "Bitte gib eine E-Mail-Adresse ein.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+      nextErrors.email = "Bitte gib eine gültige E-Mail-Adresse ein.";
+    } else if (
+      eventFound.attendees.some(
+        (attendee) => attendee.email.toLowerCase() === normalizedEmail,
+      )
+    ) {
+      nextErrors.email = "Diese E-Mail-Adresse ist bereits angemeldet.";
+    }
+
+    if (eventFound.attendees.length >= eventFound.maxAttendees) {
+      nextErrors.form = "Dieses Event hat bereits die maximale Teilnehmerzahl erreicht.";
+    }
+
+    setFormErrors(nextErrors);
+
+    if (nextErrors.name) {
+      nameInputRef.current?.focus();
+      return;
+    }
+    if (nextErrors.email) {
+      emailInputRef.current?.focus();
+      return;
+    }
+    if (nextErrors.form) return;
+
+    addAttendee(eventFound.id, {
+      id: crypto.randomUUID(),
+      name: trimmedName,
+      email: normalizedEmail,
+    });
+    setName("");
+    setEmail("");
   }
  
   if (eventFound === undefined) {
     return (
       <>
-        <p>Error! Event not found.</p>
-        <Link to="/events">Back to events</Link>
+        <p>Fehler: Event nicht gefunden.</p>
+        <Link to="/events">Zurück zu den Events</Link>
       </>
     );
   }
 
-const details = eventFound.attendees.map((attendees: any) => {
+const details = eventFound.attendees.map((attendees) => {
   return (
     <div
       key={attendees.id}
@@ -78,40 +127,40 @@ const details = eventFound.attendees.map((attendees: any) => {
              })
            }
          >
-           Edit
+           Bearbeiten
          </button>
        </div>
 
        <div className="grid gap-4 sm:grid-cols-2">
          <p className="rounded-xl bg-slate-800 p-4 text-sm text-slate-200">
-           Date: {eventFound.date}
+           Datum: {eventFound.date}
          </p>
          <p className="rounded-xl bg-slate-800 p-4 text-sm text-slate-200">
-           Time: {eventFound.time}
+           Uhrzeit: {eventFound.time}
          </p>
          <p className="rounded-xl bg-slate-800 p-4 text-sm text-slate-200">
-           Location: {eventFound.location}
+           Ort: {eventFound.location}
          </p>
          <p className="rounded-xl bg-slate-800 p-4 text-sm text-slate-200">
-           Category: {eventFound.category}
+           Kategorie: {eventCategoryLabels[eventFound.category]}
          </p>
          <p className="rounded-xl bg-slate-800 p-4 text-sm text-slate-200">
-           Status: {eventFound.status}
+           Status: {eventStatusLabels[eventFound.status]}
          </p>
          <p className="rounded-xl bg-slate-800 p-4 text-sm text-slate-200">
-           Max Attendees: {eventFound.maxAttendees}
+           Maximale Teilnehmerzahl: {eventFound.maxAttendees}
          </p>
          <p className="rounded-xl bg-slate-800 p-4 text-sm text-slate-200">
-           Attendees: {eventFound.attendees.length}
+           Teilnehmer: {eventFound.attendees.length}
          </p>
          <p className="rounded-xl bg-slate-800 p-4 text-sm text-slate-200">
-           Created at: {eventFound.createdAt}
+           Erstellt am: {eventFound.createdAt}
          </p>
        </div>
 
        <section className="mt-10">
          <h2 className="mb-4 text-lg font-semibold text-slate-100">
-           Attendees
+           Teilnehmer
          </h2>
 
          <div className="space-y-3">{details}</div>
@@ -119,33 +168,70 @@ const details = eventFound.attendees.map((attendees: any) => {
 
        <section className="mt-10 rounded-2xl border border-slate-800 bg-slate-800 p-5">
          <h2 className="mb-4 text-lg font-semibold text-slate-100">
-           Add attendee
+           Teilnehmer hinzufügen
          </h2>
 
-         <div className="grid gap-4 sm:grid-cols-2">
-           <input
-             className="rounded-xl border border-slate-300 bg-slate-700 px-4 py-3 text-sm text-slate-100 outline-none focus:border-slate-100 focus:ring-2 focus:ring-slate-800"
-             type="text"
-             placeholder="Name"
-             value={name}
-             onChange={handleAddAttendeeName}
-           />
+         {/* NEU: Teilnehmerformular - native Form, Labels und Feldfehler. */}
+         <form onSubmit={handleAddAttendee} noValidate>
+           <div className="grid gap-4 sm:grid-cols-2">
+             <div>
+               <label htmlFor="attendee-name" className="mb-2 block text-sm font-medium text-slate-200">
+                 Name
+               </label>
+               <input
+                 ref={nameInputRef}
+                 id="attendee-name"
+                 name="attendeeName"
+                 autoComplete="name"
+                 className="w-full rounded-xl border border-slate-300 bg-slate-700 px-4 py-3 text-sm text-slate-100 outline-none focus:border-slate-100 focus:ring-2 focus:ring-slate-800"
+                 type="text"
+                 value={name}
+                 aria-invalid={Boolean(formErrors.name)}
+                 aria-describedby={formErrors.name ? "attendee-name-error" : undefined}
+                 onChange={(event) => setName(event.target.value)}
+               />
+               {formErrors.name ? (
+                 <p id="attendee-name-error" className="mt-2 text-sm text-red-300">
+                   {formErrors.name}
+                 </p>
+               ) : null}
+             </div>
 
-           <input
-             className="rounded-xl border border-slate-300 bg-slate-700 px-4 py-3 text-sm text-slate-100 outline-none focus:border-slate-100 focus:ring-2 focus:ring-slate-800"
-             type="text"
-             placeholder="E-Mail"
-             value={email}
-             onChange={handleAddAttendeeEmail}
-           />
-         </div>
+             <div>
+               <label htmlFor="attendee-email" className="mb-2 block text-sm font-medium text-slate-200">
+                 E-Mail
+               </label>
+               <input
+                 ref={emailInputRef}
+                 id="attendee-email"
+                 name="attendeeEmail"
+                 autoComplete="email"
+                 className="w-full rounded-xl border border-slate-300 bg-slate-700 px-4 py-3 text-sm text-slate-100 outline-none focus:border-slate-100 focus:ring-2 focus:ring-slate-800"
+                 type="email"
+                 value={email}
+                 aria-invalid={Boolean(formErrors.email)}
+                 aria-describedby={formErrors.email ? "attendee-email-error" : undefined}
+                 onChange={(event) => setEmail(event.target.value)}
+               />
+               {formErrors.email ? (
+                 <p id="attendee-email-error" className="mt-2 text-sm text-red-300">
+                   {formErrors.email}
+                 </p>
+               ) : null}
+             </div>
+           </div>
 
-         <button
-           className="mt-4 rounded-xl bg-slate-100 px-5 py-3 text-sm font-medium text-slate-900 transition hover:bg-white"
-           onClick={handleAddAttendeeBtn}
-         >
-           Add attendee
-         </button>
+           <p role="alert" className="mt-3 min-h-5 text-sm text-red-300">
+             {formErrors.form}
+           </p>
+
+           <button
+             type="submit"
+             className="mt-4 rounded-xl bg-slate-100 px-5 py-3 text-sm font-medium text-slate-900 transition hover:bg-white"
+           >
+             Teilnehmer hinzufügen
+           </button>
+         </form>
        </section>
      </section>
    </main>

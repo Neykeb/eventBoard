@@ -2,6 +2,22 @@ export type EventStatus = "draft" | "published" | "cancelled" | "completed";
 
 export type EventCategory = "workshop" | "talk" | "networking" | "review" | "other";
 
+// NEU: Einheitliche Sprache - technische Werte erhalten deutsche UI-Texte.
+export const eventStatusLabels: Record<EventStatus, string> = {
+  draft: "Entwurf",
+  published: "Veröffentlicht",
+  cancelled: "Abgesagt",
+  completed: "Abgeschlossen",
+};
+
+export const eventCategoryLabels: Record<EventCategory, string> = {
+  workshop: "Workshop",
+  talk: "Vortrag",
+  networking: "Netzwerken",
+  review: "Feedback",
+  other: "Sonstiges",
+};
+
 export type Attendee = {
   id: string;
   name: string;
@@ -25,11 +41,11 @@ export type Event = {
 export const initialEvents: Event[] = [
   {
     id: "react-workshop",
-    title: "React Basics Workshop",
-    description: "A practical workshop about components, props and state.",
+    title: "React-Grundlagen-Workshop",
+    description: "Ein praktischer Workshop über Komponenten, Props und State.",
     date: "2026-06-24",
     time: "10:00",
-    location: "Room A",
+    location: "Raum A",
     category: "workshop",
     status: "published",
     maxAttendees: 16,
@@ -44,8 +60,8 @@ export const initialEvents: Event[] = [
   },
   {
     id: "portfolio-review",
-    title: "Portfolio Review Day",
-    description: "Students can receive feedback on their developer portfolios.",
+    title: "Portfolio-Feedback-Tag",
+    description: "Teilnehmende erhalten Feedback zu ihren Entwicklerportfolios.",
     date: "2026-06-26",
     time: "13:00",
     location: "Online",

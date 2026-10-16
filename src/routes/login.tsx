@@ -13,7 +13,7 @@ function LoginPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-800 px-4 py-12">
       <section className="flex w-full max-w-md flex-col items-center gap-6">
-        <h1 className="text-3xl font-bold text-white">Login</h1>
+        <h1 className="text-3xl font-bold text-white">Anmelden</h1>
 
         <SignIn
           routing="hash"
