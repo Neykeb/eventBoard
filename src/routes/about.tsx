@@ -6,11 +6,12 @@ export const Route = createFileRoute("/about")({
 
 function RouteComponent() {
   return (
-    <main className="min-h-screen flex justify-center items-center bg-slate-800 px-4 py-10">
-      <section className=" mx-auto max-w-3xl rounded-2xl border border-slate-800 bg-slate-700 p-8 shadow-sm">
-        <h1 className="mb-4 text-3xl font-semibold text-slate-100">Über uns</h1>
+    <main className="app-page flex items-center justify-center">
+      <section className="premium-panel mx-auto max-w-3xl p-8 sm:p-10">
+        <p className="mb-2 text-sm font-medium text-[#FF6B89]">Über das Projekt</p>
+        <h1 className="mb-5 text-3xl font-semibold tracking-tight text-white">Event Board</h1>
 
-        <div className="space-y-4 text-slate-300">
+        <div className="space-y-4 leading-7 text-[#CBD5E1]">
           <p>
             Dieses Projekt wurde mit React, TypeScript und TanStack Router
             erstellt. Nutzer können Events erstellen, bearbeiten und verwalten.

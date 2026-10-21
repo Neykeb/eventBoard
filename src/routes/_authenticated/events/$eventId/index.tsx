@@ -82,10 +82,7 @@ function RouteComponent() {
  
   if (eventFound === undefined) {
     return (
-      <>
-        <p>Fehler: Event nicht gefunden.</p>
-        <Link to="/events">Zurück zu den Events</Link>
-      </>
+      <main className="app-page"><section className="premium-panel mx-auto max-w-xl text-center"><h1 className="text-2xl font-semibold text-white">Event nicht gefunden</h1><Link className="primary-button mt-6" to="/events">Zurück zu den Events</Link></section></main>
     );
   }
 
@@ -93,11 +90,11 @@ const details = eventFound.attendees.map((attendees) => {
   return (
     <div
       key={attendees.id}
-      className="rounded-xl border border-slate-800 bg-slate-800 p-4"
+      className="rounded-xl border border-[#44536A] bg-[#29374A] p-4"
     >
-      <p className="text-xs text-slate-400">{attendees.id}</p>
-      <p className="mt-1 font-medium text-slate-100">{attendees.name}</p>
-      <p className="text-sm text-slate-300">{attendees.email}</p>
+      <p className="text-xs text-[#A9B5C7]">{attendees.id}</p>
+      <p className="mt-1 font-medium text-white">{attendees.name}</p>
+      <p className="text-sm text-[#A9B5C7]">{attendees.email}</p>
     </div>
   );
 });
@@ -105,21 +102,21 @@ const details = eventFound.attendees.map((attendees) => {
 
 
  return (
-   <main className="min-h-screen bg-slate-800 px-4 py-10">
-     <section className="mx-auto max-w-3xl rounded-2xl border border-slate-800 bg-slate-700 p-8 shadow-sm">
+   <main className="app-page">
+     <section className="detail-page premium-panel mx-auto max-w-4xl p-6 sm:p-8">
        <div className="mb-8 flex items-start justify-between gap-4">
          <div>
-           <p className="text-sm text-slate-300">Event-ID: {eventId}</p>
-           <h1 className="mt-2 text-2xl font-semibold text-slate-100">
+           <p className="text-sm font-medium text-[#FF6B89]">Eventdetails</p>
+           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-white">
              {eventFound.title}
            </h1>
-           <p className="mt-2 text-sm text-slate-200">
+           <p className="mt-3 max-w-2xl text-sm leading-6 text-[#CBD5E1]">
              {eventFound.description}
            </p>
          </div>
 
          <button
-           className="rounded-xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-900 transition hover:bg-white"
+           className="secondary-button"
            onClick={() =>
              navigate({
                to: "/events/$eventId/edit",
@@ -166,13 +163,13 @@ const details = eventFound.attendees.map((attendees) => {
          <div className="space-y-3">{details}</div>
        </section>
 
-       <section className="mt-10 rounded-2xl border border-slate-800 bg-slate-800 p-5">
+       <section className="mt-10 rounded-2xl border border-[#44536A] bg-[#29374A] p-5 sm:p-6">
          <h2 className="mb-4 text-lg font-semibold text-slate-100">
            Teilnehmer hinzufügen
          </h2>
 
          {/* NEU: Teilnehmerformular - native Form, Labels und Feldfehler. */}
-         <form onSubmit={handleAddAttendee} noValidate>
+         <form className="premium-form" onSubmit={handleAddAttendee} noValidate>
            <div className="grid gap-4 sm:grid-cols-2">
              <div>
                <label htmlFor="attendee-name" className="mb-2 block text-sm font-medium text-slate-200">
@@ -227,7 +224,7 @@ const details = eventFound.attendees.map((attendees) => {
 
            <button
              type="submit"
-             className="mt-4 rounded-xl bg-slate-100 px-5 py-3 text-sm font-medium text-slate-900 transition hover:bg-white"
+             className="primary-button mt-4"
            >
              Teilnehmer hinzufügen
            </button>

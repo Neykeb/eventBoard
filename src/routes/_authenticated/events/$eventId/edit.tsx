@@ -32,7 +32,7 @@ function RouteComponent() {
   }
 
   if (eventFound === undefined) {
-    return <p>Event nicht gefunden.</p>;
+    return <main className="app-page"><p className="mx-auto max-w-2xl text-[#CBD5E1]">Event nicht gefunden.</p></main>;
   }
 
   // NEU: Das Formular wird erst erstellt, wenn die Eventdaten geladen sind.
@@ -151,19 +151,20 @@ function EditEventForm({ eventFound, updateEvent }: EditEventFormProps) {
   }
 
   return (
-    <main className="min-h-screen bg-slate-800 px-4 py-10">
-      <section className="mx-auto max-w-2xl rounded-2xl border border-slate-800 bg-slate-700 p-8 shadow-sm">
+    <main className="app-page">
+      <section className="premium-panel mx-auto max-w-2xl p-6 sm:p-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-slate-100">
+          <p className="mb-2 text-sm font-medium text-[#FF6B89]">Eventverwaltung</p>
+          <h1 className="text-3xl font-semibold tracking-tight text-white">
             Event bearbeiten
           </h1>
-          <p className="mt-2 text-sm text-slate-300">
+          <p className="mt-2 text-sm text-[#A9B5C7]">
             Ändere die Daten deines Events und speichere sie danach.
           </p>
         </div>
 
         {/* NEU: Bearbeitungsformular - native Form mit verbundenen Labels. */}
-        <form className="space-y-5" onSubmit={handleSave} noValidate>
+        <form className="premium-form space-y-5" onSubmit={handleSave} noValidate>
           <div>
             <label htmlFor="event-title" className="mb-2 block text-sm font-medium text-slate-200">
               Titel
@@ -319,7 +320,7 @@ function EditEventForm({ eventFound, updateEvent }: EditEventFormProps) {
 
           <button
             type="submit"
-            className="mt-4 w-full rounded-xl bg-slate-100 px-5 py-3 text-sm font-medium text-slate-900 transition hover:bg-white"
+            className="primary-button mt-4 w-full"
           >
             Speichern
           </button>

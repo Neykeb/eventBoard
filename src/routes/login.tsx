@@ -11,9 +11,9 @@ function LoginPage() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-800 px-4 py-12">
+    <main className="flex min-h-screen items-center justify-center bg-[#222D3F] px-4 py-12">
       <section className="flex w-full max-w-md flex-col items-center gap-6">
-        <h1 className="text-3xl font-bold text-white">Anmelden</h1>
+        <div className="text-center"><p className="mb-2 text-sm font-medium text-[#FF6B89]">Willkommen zurück</p><h1 className="text-3xl font-semibold tracking-tight text-white">Bei Event Board anmelden</h1></div>
 
         <SignIn
           routing="hash"

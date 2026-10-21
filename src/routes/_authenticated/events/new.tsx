@@ -48,57 +48,58 @@ function CreateEventPage() {
   }
 
   const fieldClass =
-    "w-full rounded-xl border border-slate-300 bg-slate-700 px-4 py-3 text-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+    "premium-field";
 
   return (
-    <main className="min-h-screen bg-slate-800 px-4 py-10">
-      <section className="mx-auto max-w-2xl rounded-2xl bg-slate-700 p-8">
-        <h1 className="text-2xl font-semibold text-white">Event erstellen</h1>
-        <p className="mt-2 text-slate-300">Felder mit * sind Pflichtfelder.</p>
+    <main className="app-page">
+      <section className="premium-panel mx-auto max-w-2xl p-6 sm:p-8">
+        <p className="mb-2 text-sm font-medium text-[#FF6B89]">Neues Event</p>
+        <h1 className="text-3xl font-semibold tracking-tight text-white">Event erstellen</h1>
+        <p className="mt-2 text-[#A9B5C7]">Felder mit * sind Pflichtfelder.</p>
 
         <form className="mt-8 space-y-5" onSubmit={handleSubmit} noValidate>
           <div>
-            <label htmlFor="new-event-title" className="mb-2 block text-sm text-slate-200">Titel *</label>
+            <label htmlFor="new-event-title" className="field-label">Titel *</label>
             <input id="new-event-title" name="title" className={fieldClass} value={title} onChange={(event) => setTitle(event.target.value)} />
           </div>
           <div>
-            <label htmlFor="new-event-description" className="mb-2 block text-sm text-slate-200">Beschreibung</label>
+            <label htmlFor="new-event-description" className="field-label">Beschreibung</label>
             <textarea id="new-event-description" name="description" className={fieldClass} value={description} onChange={(event) => setDescription(event.target.value)} />
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
-              <label htmlFor="new-event-date" className="mb-2 block text-sm text-slate-200">Datum *</label>
+              <label htmlFor="new-event-date" className="field-label">Datum *</label>
               <input id="new-event-date" name="date" type="date" className={fieldClass} value={date} onChange={(event) => setDate(event.target.value)} />
             </div>
             <div>
-              <label htmlFor="new-event-time" className="mb-2 block text-sm text-slate-200">Uhrzeit *</label>
+              <label htmlFor="new-event-time" className="field-label">Uhrzeit *</label>
               <input id="new-event-time" name="time" type="time" className={fieldClass} value={time} onChange={(event) => setTime(event.target.value)} />
             </div>
           </div>
           <div>
-            <label htmlFor="new-event-location" className="mb-2 block text-sm text-slate-200">Ort</label>
+            <label htmlFor="new-event-location" className="field-label">Ort</label>
             <input id="new-event-location" name="location" className={fieldClass} value={location} onChange={(event) => setLocation(event.target.value)} />
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
-              <label htmlFor="new-event-category" className="mb-2 block text-sm text-slate-200">Kategorie</label>
+              <label htmlFor="new-event-category" className="field-label">Kategorie</label>
               <select id="new-event-category" name="category" className={fieldClass} value={category} onChange={(event) => setCategory(event.target.value as EventCategory)}>
                 <option value="workshop">Workshop</option><option value="talk">Vortrag</option><option value="networking">Netzwerken</option><option value="review">Feedback</option><option value="other">Sonstiges</option>
               </select>
             </div>
             <div>
-              <label htmlFor="new-event-status" className="mb-2 block text-sm text-slate-200">Status</label>
+              <label htmlFor="new-event-status" className="field-label">Status</label>
               <select id="new-event-status" name="status" className={fieldClass} value={status} onChange={(event) => setStatus(event.target.value as EventStatus)}>
                 <option value="draft">Entwurf</option><option value="published">Veröffentlicht</option><option value="cancelled">Abgesagt</option><option value="completed">Abgeschlossen</option>
               </select>
             </div>
           </div>
           <div>
-            <label htmlFor="new-event-maximum" className="mb-2 block text-sm text-slate-200">Maximale Teilnehmerzahl *</label>
+            <label htmlFor="new-event-maximum" className="field-label">Maximale Teilnehmerzahl *</label>
             <input id="new-event-maximum" name="maxAttendees" type="number" min="1" step="1" className={fieldClass} value={maxAttendees} onChange={(event) => setMaxAttendees(event.target.value)} />
           </div>
           <p role="alert" className="min-h-5 text-sm text-red-300">{error}</p>
-          <button type="submit" className="w-full rounded-xl bg-white px-5 py-3 font-medium text-slate-900 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Event erstellen</button>
+          <button type="submit" className="primary-button w-full">Event erstellen</button>
         </form>
       </section>
     </main>

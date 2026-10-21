@@ -45,4 +45,4 @@ Beim ersten Aufruf lädt `EventsProvider` die Ausgangsdaten asynchron aus `publi
 
 ## Deployment
 
-Ein öffentlicher Live-Link wird nach dem Deployment auf Vercel oder Netlify hier ergänzt.
+[eventboard-1.netlify.app](https://eventboard-1.netlify.app/events)

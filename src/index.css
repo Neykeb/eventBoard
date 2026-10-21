@@ -1,12 +1,54 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+:root {
+  color: #ffffff;
+  background: #222d3f;
+  font-synthesis: none;
+}
+
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; background: #222d3f; }
+
+@layer components {
+  .app-page { @apply min-h-screen bg-[#222D3F] px-4 py-10 sm:px-6 lg:px-8 lg:py-14; }
+  .premium-panel { @apply rounded-2xl border border-[#44536A] bg-[#344359] p-5 shadow-[0_16px_36px_rgba(12,19,31,0.16)] sm:p-6; }
+  .primary-button { @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#D92E59] px-5 font-semibold text-white transition duration-200 hover:bg-[#CC2752] active:scale-[0.98]; }
+  .secondary-button { @apply inline-flex min-h-11 items-center justify-center rounded-xl border border-[#56657B] bg-[#29374A] px-4 font-medium text-[#CBD5E1] transition duration-200 hover:border-[#6A7B94] hover:text-white active:scale-[0.98]; }
+  .field-label { @apply mb-2 block text-xs font-medium text-[#CBD5E1]; }
+  .premium-field { @apply w-full rounded-xl border border-[#44536A] bg-[#29374A] px-4 py-3 text-sm text-white outline-none transition placeholder:text-[#A9B5C7] hover:border-[#596980] focus:border-[#F45277] focus:ring-2 focus:ring-[#F45277]/20; }
+}
+
 /* NEU: Fokusdarstellung - einheitlich sichtbar bei Tastaturbedienung. */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #ffffff;
+  outline: 2px solid #f45277;
   outline-offset: 3px;
+}
+
+summary::-webkit-details-marker { display: none; }
+
+.premium-form input,
+.premium-form select,
+.premium-form textarea {
+  width: 100%;
+  border: 1px solid #44536a;
+  border-radius: 0.75rem;
+  background: #29374a;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  outline: none;
+  transition: border-color 200ms, box-shadow 200ms;
+}
+.premium-form input:focus,
+.premium-form select:focus,
+.premium-form textarea:focus { border-color: #f45277; box-shadow: 0 0 0 3px rgb(244 82 119 / 0.18); }
+.premium-form label { color: #cbd5e1; }
+.detail-page > div.grid > p { border: 1px solid #44536a; background: #29374a; color: #cbd5e1; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
